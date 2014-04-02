@@ -5,3 +5,9 @@ RSpec::Core::RakeTask.new(:spec)
 
 task :default => :spec
 
+desc "pry console"
+task :console do
+  require "pry"
+  require "barrage"
+  binding.pry
+end
