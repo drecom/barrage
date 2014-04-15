@@ -9,7 +9,7 @@ class Barrage
   # generators:
   #   - name: msec
   #     length: 40
-  #     start_at: 1396439813232 # 2014-04-02 20:56:53 +0900
+  #     start_at: 1396278000000 # 2014-04-01 00:00:00 +0900 (msec)
   #   - name: pid
   #     length: 16
   #   - name: sequence
