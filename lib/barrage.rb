@@ -28,8 +28,6 @@ class Barrage
     generate
   end
 
-  private
-
   def generate
     shift_size = length
     @generators.inject(0) do |result, generator|
