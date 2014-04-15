@@ -25,4 +25,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec", "2.99.0.beta2"
   spec.add_development_dependency "pry"
   spec.add_development_dependency "guard-rspec"
+  spec.add_development_dependency "redis"
 end
