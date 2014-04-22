@@ -19,7 +19,8 @@ class Barrage
         now = Time.now.to_i
         if @worker_ttl - now <= 0
           @data[1] = @worker_id = renew_worker_id
-          @worker_ttl = now + ttl / 2 # 1/2 以上過ぎたら再度取得
+          # check redis when passed half of real ttl
+          @worker_ttl = now + ttl / 2
         end
         @worker_id
       end
