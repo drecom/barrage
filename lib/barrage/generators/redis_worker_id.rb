@@ -23,6 +23,7 @@ class Barrage
         end
         @worker_id
       end
+      alias_method :current, :generate
 
       def redis
         @redis ||= @data[0] = Redis.new(options["redis"] || {})

@@ -24,15 +24,20 @@ class Barrage
     end
   end
 
-  def next
-    generate
-  end
-
   def generate
     shift_size = length
     @generators.inject(0) do |result, generator|
       shift_size = shift_size - generator.length
       result += generator.generate << shift_size
+    end
+  end
+  alias_method :next, :generate
+
+  def current
+    shift_size = length
+    @generators.inject(0) do |result, generator|
+      shift_size = shift_size - generator.length
+      result += generator.current << shift_size
     end
   end
 

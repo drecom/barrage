@@ -6,6 +6,8 @@ class Barrage
       def generate
         Process.pid & (2 ** length-1)
       end
+
+      alias_method :current, :generate
     end
   end
 end

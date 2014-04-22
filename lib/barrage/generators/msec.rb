@@ -7,6 +7,8 @@ class Barrage
         ((Time.now.to_f * 1000).round - start_at) & (2 ** length - 1)
       end
 
+      alias_method :current, :generate
+
       def start_at
         options["start_at"]
       end

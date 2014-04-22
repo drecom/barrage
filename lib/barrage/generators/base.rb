@@ -14,6 +14,10 @@ class Barrage
       def generate
         raise NotImplemented, "Please Override"
       end
+
+      def current
+        raise NotImplemented, "Please Override"
+      end
     end
   end
 end
