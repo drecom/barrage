@@ -60,10 +60,6 @@ class Barrage
         ).to_i
       end
 
-      def return_worker_id
-        redis.del("barrage:worker:#{@worker_id}")
-      end
-
       def script_sha
         @script_sha ||=
           redis.script(:load, <<-EOF.gsub(/^ {12}/, ''))
