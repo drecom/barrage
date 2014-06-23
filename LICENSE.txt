@@ -1,4 +1,4 @@
-Copyright (c) 2014 gussan
+Copyright (c) 2014 Drecom Co., Ltd.
 
 MIT License
 

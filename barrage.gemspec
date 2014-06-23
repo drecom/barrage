@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["egussan@gmail.com"]
   spec.summary       = %q{Distributed sequence id generator}
   spec.description   = %q{Distributed sequence id generator}
-  spec.homepage      = ""
+  spec.homepage      = "http://github.com/drecom/barrage"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
