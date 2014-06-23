@@ -17,6 +17,7 @@ class Barrage
 
   def initialize(options = {})
     @options = options
+    @lock = Mutex.new
     @generators = @options["generators"].map do |h|
       generator_name = h["name"]
       require "barrage/generators/#{generator_name}"
@@ -25,20 +26,24 @@ class Barrage
   end
 
   def generate
-    shift_size = length
-    @generators.inject(0) do |result, generator|
-      shift_size = shift_size - generator.length
-      result += generator.generate << shift_size
-    end
+    @lock.synchronize {
+      shift_size = length
+      @generators.inject(0) do |result, generator|
+        shift_size = shift_size - generator.length
+        result += generator.generate << shift_size
+      end
+    }
   end
   alias_method :next, :generate
 
   def current
-    shift_size = length
-    @generators.inject(0) do |result, generator|
-      shift_size = shift_size - generator.length
-      result += generator.current << shift_size
-    end
+    @lock.synchronize {
+      shift_size = length
+      @generators.inject(0) do |result, generator|
+        shift_size = shift_size - generator.length
+        result += generator.current << shift_size
+      end
+    }
   end
 
   def length
