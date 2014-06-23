@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Barrage::VERSION
   spec.authors       = ["gussan"]
   spec.email         = ["egussan@gmail.com"]
-  spec.summary       = %q{Distributed sequence id generator}
-  spec.description   = %q{Distributed sequence id generator}
+  spec.summary       = %q{Distributed id generator}
+  spec.description   = %q{Distributed id generator}
   spec.homepage      = "http://github.com/drecom/barrage"
   spec.license       = "MIT"
 
