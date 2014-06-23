@@ -28,7 +28,7 @@ require 'barrage'
 
 barrage = Barrage.new(
   "generators" => [
-    {"name" => "msec", "length" => 40, "start_at" => 1396278000000},
+    {"name" => "msec", "length" => 39, "start_at" => 1396278000000},
     {"name" => "redis_worker_id", "length" => 16, "ttl" => 300},
     {"name" => "sequence", "length" => 9}
   ]
