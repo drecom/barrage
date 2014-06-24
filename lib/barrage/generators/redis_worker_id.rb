@@ -9,6 +9,7 @@ class Barrage
       def initialize(options = {})
         @worker_id = nil
         @worker_ttl = 0
+        @real_ttl   = 0
         super
         @data = []
         @finalizer_proc = Finalizer.new(@data)
@@ -21,6 +22,7 @@ class Barrage
           @data[1] = @worker_id = renew_worker_id
           # check redis when passed half of real ttl
           @worker_ttl = now + ttl / 2
+          @real_ttl   = now + ttl
         end
         @worker_id
       end
@@ -54,6 +56,9 @@ class Barrage
       private
 
       def renew_worker_id
+        if @real_ttl - Time.now.to_i - RACE_CONDITION_TTL <= 0
+          @worker_id = nil
+        end
         new_worker_id = redis.evalsha(
           script_sha,
           argv: [2 ** length, rand(2 ** length), @worker_id, ttl, RACE_CONDITION_TTL]
