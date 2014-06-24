@@ -54,29 +54,33 @@ class Barrage
       private
 
       def renew_worker_id
-        redis.evalsha(
+        new_worker_id = redis.evalsha(
           script_sha,
-          argv: [2 ** length, rand(2 ** length), ttl, RACE_CONDITION_TTL]
+          argv: [2 ** length, rand(2 ** length), @worker_id, ttl, RACE_CONDITION_TTL]
         ).to_i
+        new_worker_id
       end
 
       def script_sha
         @script_sha ||=
           redis.script(:load, <<-EOF.gsub(/^ {12}/, ''))
-            local worker_id = redis.call("CLIENT", "GETNAME")
+            local max_value = ARGV[1]
+            local new_worker_id = ARGV[2]
+            local old_worker_id = ARGV[3]
+            local ttl = ARGV[4]
+            local race_condition_ttl = ARGV[5]
 
-            if type(worker_id) == "string" and redis.call('EXISTS', "barrage:worker:" .. worker_id) == 1 then
-              redis.call("EXPIRE", "barrage:worker:" .. worker_id, ARGV[3] + ARGV[4])
+            if type(old_worker_id) == "string" and string.len(old_worker_id) > 0 and redis.call('EXISTS', "barrage:worker:" .. old_worker_id) == 1 then
+              redis.call("EXPIRE", "barrage:worker:" .. old_worker_id, ttl + race_condition_ttl)
+              new_worker_id = old_worker_id
             else
-              worker_id = ARGV[2]
-              while redis.call("SETNX", "barrage:worker:" .. worker_id, 1) == 0
+              while redis.call("SETNX", "barrage:worker:" .. new_worker_id, 1) == 0
               do
-                worker_id = (worker_id + 1) % ARGV[1]
+                new_worker_id = (new_worker_id + 1) % max_value
               end
-              redis.call("EXPIRE", "barrage:worker:" .. worker_id, ARGV[3] + ARGV[4])
-              redis.call("CLIENT", "SETNAME", worker_id)
+              redis.call("EXPIRE", "barrage:worker:" .. new_worker_id, ttl + race_condition_ttl)
             end
-            return worker_id
+            return new_worker_id
           EOF
       end
     end
