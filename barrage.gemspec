@@ -29,4 +29,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "redis"
   spec.add_development_dependency "fakeredis"
   spec.add_development_dependency "delorean"
+  spec.add_development_dependency "coveralls"
 end

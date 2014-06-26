@@ -3,6 +3,9 @@ require 'bundler/setup'
 require 'rspec/its'
 require 'delorean'
 
+require 'coveralls'
+Coveralls.wear!
+
 require 'barrage'
 
 RSpec.configure do |config|

@@ -1,6 +1,7 @@
 # Barrage
 
 [![Gem Version](https://badge.fury.io/rb/barrage.svg)](http://badge.fury.io/rb/barrage)
+[![Coverage Status](https://img.shields.io/coveralls/drecom/barrage.svg)](https://coveralls.io/r/drecom/barrage)
 
 Distributed ID generator(like twitter/snowflake)
 
