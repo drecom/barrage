@@ -1,5 +1,7 @@
 # Barrage
 
+[![Gem Version](https://badge.fury.io/rb/barrage.svg)](http://badge.fury.io/rb/barrage)
+
 Distributed ID generator(like twitter/snowflake)
 
 ## Installation
