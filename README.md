@@ -34,7 +34,7 @@ barrage = Barrage.new(
   ]
 )
 barrage.next
-# => Generated ID
+# => Generated 64bit ID
 ```
 
 ### Generators
@@ -48,13 +48,14 @@ barrage.next
 ```ruby
 module Barrage::Generators
   class YourOwnGenerator < Base
+    self.required_options += %w(your_option_value)
     def generate
-	  # generated code
-	end
+      # generated code
+    end
 
     def your_option_value
-	  options["your_option_value"]
-	end
+      options["your_option_value"]
+    end
   end
 end
 

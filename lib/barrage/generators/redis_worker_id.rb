@@ -5,6 +5,7 @@ class Barrage
   module Generators
     class RedisWorkerId < Base
       RACE_CONDITION_TTL = 30
+      self.required_options += %w(ttl)
 
       def initialize(options = {})
         @worker_id = nil
