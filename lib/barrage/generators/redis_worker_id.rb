@@ -21,20 +21,21 @@ class Barrage
         now = Time.now.to_i
         if @worker_ttl - now <= 0
           @data[1] = @worker_id = renew_worker_id
-          # check redis when passed half of real ttl
+          # check redis after half of real ttl
           @worker_ttl = now + ttl / 2
           @real_ttl   = now + ttl
+          @data[2] = @real_ttl
         end
         @worker_id
       end
       alias_method :current, :generate
 
-      def redis
-        @redis ||= @data[0] = Redis.new(options["redis"] || {})
-      end
-
       def ttl
         options["ttl"]
+      end
+
+      def redis
+        @redis ||= @data[0] = Redis.new(options["redis"] || {})
       end
 
       class Finalizer
@@ -45,10 +46,10 @@ class Barrage
 
         def call(*args)
           return if @pid != $$
-          redis, worker_id = *@data
+          redis, worker_id, real_ttl = *@data
 
           if redis.is_a?(Redis) and redis.connected?
-            redis.del("barrage:worker:#{worker_id}")
+            redis.del("barrage:worker:#{worker_id}") if real_ttl > Time.now.to_i
             redis.client.disconnect
           end
         end
