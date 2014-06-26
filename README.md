@@ -4,6 +4,7 @@
 [![Dependency Status](https://gemnasium.com/drecom/barrage.svg)](https://gemnasium.com/drecom/barrage)
 [![Coverage Status](https://img.shields.io/coveralls/drecom/barrage.svg)](https://coveralls.io/r/drecom/barrage)
 [![Build Status](https://travis-ci.org/drecom/barrage.svg)](https://travis-ci.org/drecom/barrage)
+[![Code Climate](https://codeclimate.com/github/drecom/barrage.png)](https://codeclimate.com/github/drecom/barrage)
 
 Distributed ID generator(like twitter/snowflake)
 
