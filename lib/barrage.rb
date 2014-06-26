@@ -50,3 +50,5 @@ class Barrage
     @generators.inject(0) {|sum, g| sum += g.length }
   end
 end
+
+require "barrage/generators"
