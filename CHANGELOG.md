@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 0.1.0
+
+  * Fix RedisWorkerId's worker_id handling
+  * Release old worker_id only if it is before ttl
+  * Add required_options to generators
+
 ## 0.0.4
 
   * [redis_worker_id generator] Release current worker_id before reaching real ttl
