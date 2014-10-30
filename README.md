@@ -47,6 +47,8 @@ barrage.next
 
 #### msec
 #### redis_worker_id
+requirement: redis 2.6+
+
 #### sequence
 
 ### Creating your own generator
