@@ -14,3 +14,5 @@ end
 if Gem::Version.create(RUBY_VERSION) < Gem::Version.create("2.2.5")
   gem "ruby_dep", "< 1.4.0"
 end
+
+gem "redis", ">= 4.0.0"

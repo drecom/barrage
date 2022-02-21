@@ -43,4 +43,24 @@ describe Barrage::Generators::RedisWorkerId do
       end
     end
   end
+
+  describe "#Finalizer" do
+    subject { described_class::Finalizer.new(data).call(*args) }
+
+    before do
+      redis._client.connect
+    end
+    let(:now) { Time.now.to_i }
+    let(:ttl) { 300 }
+    let(:redis) { Redis.new }
+    let(:worker_ttl) { now + ttl / 2 }
+    let(:real_ttl) { now + ttl }
+    let(:data) { [redis, worker_ttl, real_ttl] }
+    let(:args) { {} }
+
+    it "redis client disconnect" do
+      subject
+      expect(redis.connected?).to eq false
+    end
+  end
 end
