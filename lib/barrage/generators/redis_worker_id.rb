@@ -50,7 +50,7 @@ class Barrage
 
           if redis.is_a?(Redis) and redis.connected?
             redis.del("barrage:worker:#{worker_id}") if real_ttl > Time.now.to_i
-            redis.client.disconnect
+            redis._client.disconnect
           end
         end
       end
