@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.1.1
+
+  * Fix redis client disconnect
+
 ## 0.1.0
 
   * Fix RedisWorkerId's worker_id handling
