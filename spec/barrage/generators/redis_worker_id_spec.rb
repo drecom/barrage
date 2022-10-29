@@ -30,7 +30,7 @@ describe Barrage::Generators::RedisWorkerId do
     it { is_expected.to be < 2 ** length }
 
     context "on many instances" do
-      subject { 64.times.map { described_class.new(options) } }
+      subject { 3.times.map { described_class.new(options) } }
       let(:length) { 8 }
 
       it "should generate unique numbers" do
@@ -47,9 +47,6 @@ describe Barrage::Generators::RedisWorkerId do
   describe "#Finalizer" do
     subject { described_class::Finalizer.new(data).call(*args) }
 
-    before do
-      redis._client.connect
-    end
     let(:now) { Time.now.to_i }
     let(:ttl) { 300 }
     let(:redis) { Redis.new }
@@ -58,9 +55,26 @@ describe Barrage::Generators::RedisWorkerId do
     let(:data) { [redis, worker_ttl, real_ttl] }
     let(:args) { {} }
 
-    it "redis client disconnect" do
-      subject
-      expect(redis.connected?).to eq false
+    if Gem.loaded_specs["redis"]&.version >= Gem::Version.new("5.0.0")
+      before do
+        redis._client.send(:raw_connection)
+      end
+
+      it "redis client disconnect" do
+        subject
+
+        expect(redis.connected?).to be_nil
+      end
+    else
+      before do
+        redis._client.connect
+      end
+
+      it "redis client disconnect" do
+        subject
+
+        expect(redis.connected?).to eq false
+      end
     end
   end
 end

@@ -50,6 +50,19 @@ class Barrage
 
           if redis.is_a?(Redis) and redis.connected?
             redis.del("barrage:worker:#{worker_id}") if real_ttl > Time.now.to_i
+
+            close_redis_connection(redis)
+          end
+        end
+
+        private
+
+        def close_redis_connection(redis)
+          redis_version = Gem.loaded_specs["redis"]&.version
+
+          if redis_version && redis_version >= Gem::Version.new("5.0.0")
+            redis._client.close
+          else
             redis._client.disconnect
           end
         end
@@ -63,7 +76,7 @@ class Barrage
         end
         new_worker_id = redis.evalsha(
           script_sha,
-          argv: [2 ** length, rand(2 ** length), @worker_id, ttl, RACE_CONDITION_TTL]
+          argv: [2 ** length, rand(2 ** length), (@worker_id || 0), ttl, RACE_CONDITION_TTL]
         )
         new_worker_id or raise StandardError, "Renew redis worker id failed"
         return new_worker_id.to_i
