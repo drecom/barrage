@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.2.0
+
+  * Compatible with Redis 5.0
+
 ## 0.1.1
 
   * Fix redis client disconnect
