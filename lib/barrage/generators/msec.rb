@@ -6,7 +6,7 @@ class Barrage
       self.required_options += %w(start_at)
 
       def generate
-        ((Time.now.to_f * 1000).round - start_at) & (2 ** length - 1)
+        ((Time.now.to_f * 500).round - start_at) & (2 ** length - 1)
       end
 
       alias_method :current, :generate
